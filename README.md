@@ -2,7 +2,7 @@
 
 Self signed certificates for use with OAuth code samples
 
-## Local PC
+## Local PC URLs
 
 On the local PC we use certificates with these URLs:
 
@@ -14,9 +14,13 @@ The following wildcard certificate is used:
 
 ![Local Cert](images/localcert.png)
 
-## Kubernetes
+The makeCerts.sh script was used to invoke openssl to create the certificates:
 
-In Kubernetes Minikube we use certificates with these URLs:
+![Script](images/script.png)
+
+## Kubernetes Ingress URLs
+
+In Kubernetes Minikube we expose these ingress URLs:
 
 - https://api.mycluster.com
 - https://web.mycluster.com
@@ -26,19 +30,11 @@ The following wildcard certificate is used:
 
 ![Cluster Cert](images/clustercert.png)
 
-## Creation
+## Kubernetes Base Setup
 
-The makeCerts.sh script was used to invoke openssl to create the certificates:
+The script at ./kubernetes/deploy-base.sh is used to deploy the Kubernetes SSL base setup.\
+This includes use of SSL certificates both inside and outside the cluster.
 
-![Script](images/script.png)
+## Trusting Certificates in Applications
 
-If required, create certificates for your own domains by editing the 'extended/server.ext' file.
-The makeCerts.sh script can then be run in a MacOS terminal or in Git Bash on Windows. 
-
-## Configuring SSL Trust
-
-Applications then need to trust the ca.pem files:
-
-![Root Authority](images/root-authorities.png)
-
-See the [Blog Post](https://authguidance.com/2017/11/11/developer-ssl-setup/) for instructions on how to do this for various technologies
+The [SSL Blog Post](https://authguidance.com/2017/11/11/developer-ssl-setup/) provides further info on trusting the certificates in various tools and technologies
