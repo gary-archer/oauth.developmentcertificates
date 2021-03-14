@@ -42,7 +42,7 @@ fi
 # Next deploy certificate manager, which will issue certificates used inside the cluster
 # The cluster issuer is then referenced by services when they are deployed
 #
-kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.1.0/cert-manager.yaml
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.yaml
 kubectl apply -f ./internal/clusterIssuer.yaml
 if [ $? -ne 0 ]
 then
