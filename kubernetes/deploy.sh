@@ -39,10 +39,21 @@ then
 fi
 
 #
-# Next deploy certificate manager, which will issue certificates used inside the cluster
-# The cluster issuer is then referenced by services when they are deployed
+# Next deploy certificate manager, used to issue certificates for inside the cluster
 #
 kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.2.0/cert-manager.yaml
+
+#
+# Wait for cert manager to initialize as described here, so that our root clister certificate is trusted
+# https://github.com/jetstack/cert-manager/issues/3338#issuecomment-707579834
+#
+echo "*** Waiting for CA injector to inject CA certificates into webhook ..."
+sleep 30
+
+#
+# Now create the cluster issuer, which uses a ca-issuer based on our openssl root certificate
+# When containers are created, the cluster issuer will then be able to issue internal SSL certificates
+#
 kubectl apply -f ./internal/clusterIssuer.yaml
 if [ $? -ne 0 ]
 then
