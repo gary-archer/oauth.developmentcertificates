@@ -47,8 +47,8 @@ kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v1.2
 # Wait for cert manager to initialize as described here, so that our root clister certificate is trusted
 # https://github.com/jetstack/cert-manager/issues/3338#issuecomment-707579834
 #
-echo "*** Waiting for CA injector to inject CA certificates into webhook ..."
-sleep 30
+echo "*** Waiting 1 minute for cainjector to inject CA certificates into web hook ..."
+sleep 60
 
 #
 # Now create the cluster issuer, which uses a ca-issuer based on our openssl root certificate
