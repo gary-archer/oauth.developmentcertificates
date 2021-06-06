@@ -17,6 +17,12 @@ eval $(minikube docker-env)
 minikube addons enable ingress
 
 #
+# This works around problems deploying ingresses later, and I hoper to find a better solution in future
+# https://stackoverflow.com/questions/61365202/nginx-ingress-service-ingress-nginx-controller-admission-not-found
+#
+kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
+
+#
 # Deploy a secret for the external wildcard certificate for *.mycluster.com, to expose URLs to the host PC
 #
 kubectl delete secret mycluster-com-tls 2>/dev/null
