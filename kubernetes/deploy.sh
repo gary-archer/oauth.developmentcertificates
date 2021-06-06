@@ -17,7 +17,7 @@ eval $(minikube docker-env)
 minikube addons enable ingress
 
 #
-# This works around problems deploying ingresses later, and I hoper to find a better solution in future
+# This works around problems deploying ingresses later, though I hope to find a cleaner solution in future
 # https://stackoverflow.com/questions/61365202/nginx-ingress-service-ingress-nginx-controller-admission-not-found
 #
 kubectl delete -A ValidatingWebhookConfiguration ingress-nginx-admission
