@@ -13,15 +13,16 @@ On the local PC we use certificates with these URLs during Web and API developme
 
 ## Docker Compose URLs
 
-In Docker Compose we use NGINX to provide these external URLs:
+In Docker Compose we use NGINX to expose components via external URLs:
 
 - https://api.mycompany.com
 - https://web.mycompany.com
 - https://login.mycompany.com
+- https://loginadmin.mycompany.com
 - https://elastic.mycompany.com
 - https://kibana.mycompany.com
 
-Theser internal URLs are used inside the cluster:
+These internal URLs are used by the actual deployed components:
 
 - https://api.mycompany.internal:8000
 - https://web.mycompany.internal:8000
