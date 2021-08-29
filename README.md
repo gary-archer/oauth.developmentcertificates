@@ -28,6 +28,8 @@ These are issued by a Root CA which can be trusted by apps as explained in the [
 A single wildcard certificate is used, for ease of administration.\
 Each distinct URL is included as a subject alternative name, which is sometimes needed for SSL trust to work.
 
+![Wildcard Certificate](./doc/wildcard-certificate.png)
+
 ## URLs for Components under Development
 
 When running a component on localhost I use these URLs:

@@ -46,18 +46,19 @@ openssl genrsa -out $ROOT_CERT_FILE_PREFIX.key 2048
 echo '*** Successfully created Root CA key'
 
 #
-# Create the public key root certificate file
+# Create the public key root certificate file, which has a long lifetime
 #
-openssl req -x509 \
-            -new \
-            -nodes \
-            -key $ROOT_CERT_FILE_PREFIX.key \
-            -out $ROOT_CERT_FILE_PREFIX.pem \
-            -subj "/CN=$ROOT_CERT_DESCRIPTION" \
-            -reqexts v3_req \
-            -extensions v3_ca \
-            -sha256 \
-            -days 365
+openssl req \
+    -x509 \
+    -new \
+    -nodes \
+    -key $ROOT_CERT_FILE_PREFIX.key \
+    -out $ROOT_CERT_FILE_PREFIX.pem \
+    -subj "/CN=$ROOT_CERT_DESCRIPTION" \
+    -reqexts v3_req \
+    -extensions v3_ca \
+    -sha256 \
+    -days 3650
 echo '*** Successfully created Root CA'
 
 #
@@ -70,33 +71,33 @@ echo '*** Successfully created SSL key'
 # Create the certificate signing request file
 #
 openssl req \
-            -new \
-			-key $SSL_CERT_FILE_PREFIX.key \
-			-out $SSL_CERT_FILE_PREFIX.csr \
-			-subj "/CN=$WILDCARD_DOMAIN_NAME"
+    -new \
+    -key $SSL_CERT_FILE_PREFIX.key \
+    -out $SSL_CERT_FILE_PREFIX.csr \
+    -subj "/CN=$WILDCARD_DOMAIN_NAME"
 echo '*** Successfully created SSL certificate signing request'
 
 #
-# Create the SSL certificate and private key
+# Create the SSL certificate and private key, which must have a limited lifetime
 #
 openssl x509 -req \
-			-in $SSL_CERT_FILE_PREFIX.csr \
-			-CA $ROOT_CERT_FILE_PREFIX.pem \
-			-CAkey $ROOT_CERT_FILE_PREFIX.key \
-			-CAcreateserial \
-			-out $SSL_CERT_FILE_PREFIX.pem \
-			-sha256 \
-			-days 365 \
-			-extfile extended/server.ext
+    -in $SSL_CERT_FILE_PREFIX.csr \
+    -CA $ROOT_CERT_FILE_PREFIX.pem \
+    -CAkey $ROOT_CERT_FILE_PREFIX.key \
+    -CAcreateserial \
+    -out $SSL_CERT_FILE_PREFIX.pem \
+    -sha256 \
+    -days 365 \
+    -extfile extended/server.ext
 echo '*** Successfully created SSL certificate'
 
 #
 # Export it to a deployable PKCS#12 file that is password protected
 #
 openssl pkcs12 \
-			-export -inkey $SSL_CERT_FILE_PREFIX.key \
-			-in $SSL_CERT_FILE_PREFIX.pem \
-			-name $WILDCARD_DOMAIN_NAME \
-			-out $SSL_CERT_FILE_PREFIX.p12 \
-			-passout pass:$SSL_CERT_PASSWORD
+    -export -inkey $SSL_CERT_FILE_PREFIX.key \
+    -in $SSL_CERT_FILE_PREFIX.pem \
+    -name $WILDCARD_DOMAIN_NAME \
+    -out $SSL_CERT_FILE_PREFIX.p12 \
+    -passout pass:$SSL_CERT_PASSWORD
 echo '*** Successfully exported SSL certificate to a PKCS#12 file'

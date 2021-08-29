@@ -40,16 +40,16 @@ openssl genrsa -out $ROOT_CERT_FILE_PREFIX.key 2048
 echo '*** Successfully created Root CA key'
 
 #
-# Create the public key root certificate file
+# Create the public key root certificate file, which has a long lifetime
 #
 openssl req -x509 \
-            -new \
-            -nodes \
-            -key $ROOT_CERT_FILE_PREFIX.key \
-            -out $ROOT_CERT_FILE_PREFIX.pem \
-            -subj "/CN=$ROOT_CERT_DESCRIPTION" \
-            -reqexts v3_req \
-            -extensions v3_ca \
-            -sha256 \
-            -days 365
+    -new \
+    -nodes \
+    -key $ROOT_CERT_FILE_PREFIX.key \
+    -out $ROOT_CERT_FILE_PREFIX.pem \
+    -subj "/CN=$ROOT_CERT_DESCRIPTION" \
+    -reqexts v3_req \
+    -extensions v3_ca \
+    -sha256 \
+    -days 3650
 echo '*** Successfully created Root CA'
