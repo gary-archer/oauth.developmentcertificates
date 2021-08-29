@@ -14,7 +14,7 @@ This can be very useful for designing real world deployments early, then underst
 | Web | https://web.mycompany.com | The base URL for web apps |
 | Authorization Server | https://login.mycompany.com | The Authorization Server address |
 
-Follow the same conventions for less central components, some of which may be internal:
+Follow the same conventions for less central components, some of which may be internal URLs:
 
 | Component | Base URL | Represents |
 | --------- | -------- | ---------- |
@@ -53,8 +53,11 @@ In this case the certificates are issued by [certmanager](https://cert-manager.i
 - https://webhost-svc.default.svc.cluster.local
 - https://login-svc.default.svc.cluster.local
 
+## Istio URLs
 
-[istio](https://istio.io/)
+At a later date I may deploy to [Istio](https://istio.io/) as the preferred Kubernetes setup.\
+In this case SSL and calls between containers can only be made via sidecars that use Mutual TLS.\
+This externalised the management of infrastructure security.
 
 ## Serverless Internet URLs
 
