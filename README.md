@@ -57,13 +57,13 @@ In this case the certificates are issued by [certmanager](https://cert-manager.i
 
 ## Istio URLs
 
-At a later date I may deploy to [Istio](https://istio.io/) as the preferred Kubernetes setup.\
-In this case SSL and calls between containers can only be made via sidecars that use Mutual TLS.\
-This externalised the management of infrastructure security.
+At a later date I may switch to [Istio](https://istio.io/) as the preferred Kubernetes setup.\
+In this case sidecars must be used to call between containers and Mutual TLS is used.\
+All of the infrastructure security is then externalised and managed automatically.
 
 ## Serverless Internet URLs
 
-I follow the same model for an AWS deployed system, where AWS Certificate Manager is used:
+I follow the same model for an AWS deployed system, where AWS Certificate Manager issues the certificates:
 
 - https://api.authsamples.com
 - https://web.authsamples.com
