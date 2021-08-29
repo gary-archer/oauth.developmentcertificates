@@ -5,8 +5,8 @@ In each case a root authority creates a wildcard certificate with multiple subje
 
 ## Architecture
 
-The goal is to properly represent an architecture on a Developer PC.\
-This can be very useful for designing real world deployments early, then understanding SSL trust.
+The goal is to represent a real world OAuth architecture on a Developer PC.\
+This can be very useful for designing deployment early and understanding SSL trust issues.
 
 | Component | Base URL | Represents |
 | --------- | -------- | ---------- |
