@@ -1,16 +1,10 @@
-#!/bin/bash
-
-###########################################################################################
-# A script to use OpenSSL to create self signed certificates for internal Docker host names
-###########################################################################################
-
 #
-# Fail on first error
+# Ensure that we are in the folder containing this script
 #
-set -e
+cd "$(dirname "${BASH_SOURCE[0]}")"
 
 #
-# Point to the OpenSsl configuration file for the platform
+# Point to the OpenSSL configuration file for the platform
 #
 case "$(uname -s)" in
 
@@ -29,26 +23,31 @@ esac
 #
 # Root certificate parameters
 #
-ROOT_CERT_FILE_PREFIX='mycompany.internal.ca'
-ROOT_CERT_DESCRIPTION='Self Signed CA for mycompany.internal'
+ORGANIZATION='mycompany'
+ROOT_CERT_FILE_PREFIX="$ORGANIZATION.ca"
+ROOT_CERT_DESCRIPTION="Self Signed CA for $ORGANIZATION.com"
 
 #
 # SSL certificate parameters
 #
-SSL_CERT_FILE_PREFIX='mycompany.internal.ssl'
+SSL_CERT_FILE_PREFIX="$ORGANIZATION.ssl"
 SSL_CERT_PASSWORD='Password1'
-WILDCARD_DOMAIN_NAME='*.mycompany.internal'
+WILDCARD_DOMAIN_NAME="*.$ORGANIZATION.com"
 
 #
 # Create the root certificate public + private key protected by a passphrase
 #
 openssl genrsa -out $ROOT_CERT_FILE_PREFIX.key 2048
-echo '*** Successfully created Root CA key'
+if [ $? -ne 0 ]; then
+  echo '*** Problem encountered creating the Root CA key'
+  exit 1
+fi
 
 #
 # Create the public key root certificate file, which has a long lifetime
 #
-openssl req -x509 \
+openssl req \
+    -x509 \
     -new \
     -nodes \
     -key $ROOT_CERT_FILE_PREFIX.key \
@@ -58,13 +57,19 @@ openssl req -x509 \
     -extensions v3_ca \
     -sha256 \
     -days 3650
-echo '*** Successfully created Root CA'
+if [ $? -ne 0 ]; then
+  echo '*** Problem encountered creating the Root CA'
+  exit 1
+fi
 
 #
 # Create the SSL key
 #
 openssl genrsa -out $SSL_CERT_FILE_PREFIX.key 2048
-echo '*** Successfully created SSL key'
+if [ $? -ne 0 ]; then
+  echo '*** Problem encountered creating the SSL key'
+  exit 1
+fi
 
 #
 # Create the certificate signing request file
@@ -74,7 +79,10 @@ openssl req \
     -key $SSL_CERT_FILE_PREFIX.key \
     -out $SSL_CERT_FILE_PREFIX.csr \
     -subj "/CN=$WILDCARD_DOMAIN_NAME"
-echo '*** Successfully created SSL certificate signing request'
+if [ $? -ne 0 ]; then
+  echo '*** Problem encountered creating the SSL certificate signing request'
+  exit 1
+fi
 
 #
 # Create the SSL certificate and private key, which must have a limited lifetime
@@ -87,8 +95,11 @@ openssl x509 -req \
     -out $SSL_CERT_FILE_PREFIX.pem \
     -sha256 \
     -days 365 \
-    -extfile extended/server.ext
-echo '*** Successfully created SSL certificate'
+    -extfile server.ext
+if [ $? -ne 0 ]; then
+  echo '*** Problem encountered creating the SSL certificate'
+  exit 1
+fi
 
 #
 # Export it to a deployable PKCS#12 file that is password protected
@@ -99,4 +110,14 @@ openssl pkcs12 \
     -name $WILDCARD_DOMAIN_NAME \
     -out $SSL_CERT_FILE_PREFIX.p12 \
     -passout pass:$SSL_CERT_PASSWORD
-echo '*** Successfully exported SSL certificate to a PKCS#12 file'
+if [ $? -ne 0 ]; then
+  echo '*** Problem encountered creating the PKCS#12 file'
+  exit 1
+fi
+
+#
+# Delete files no longer needed
+#
+rm "$ORGANIZATION.ssl.csr"
+rm "$ORGANIZATION.srl"
+echo 'All certificates created successfully'
