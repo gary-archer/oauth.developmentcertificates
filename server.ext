@@ -1,1 +1,1 @@
-subjectAltName=DNS:mycompany.com,DNS:api.mycompany.com,DNS:web.mycompany.com,DNS:login.mycompany.com,DNS:apigateway-internal.mycompany.com,DNS:api-internal.mycompany.com
+subjectAltName=DNS:mycompany.com,DNS:api.mycompany.com,DNS:web.mycompany.com,DNS:login.mycompany.com,DNS:logs.mycompany.com,DNS:apigateway-internal.mycompany.com,DNS:api-internal.mycompany.com
