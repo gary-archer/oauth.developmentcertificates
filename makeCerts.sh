@@ -35,7 +35,7 @@ SSL_CERT_PASSWORD='Password1'
 WILDCARD_DOMAIN_NAME="*.$ORGANIZATION.com"
 
 #
-# Create the root certificate public + private key protected by a passphrase
+# Create the root public + private key
 #
 openssl genrsa -out $ROOT_CERT_FILE_PREFIX.key 2048
 if [ $? -ne 0 ]; then
@@ -44,7 +44,7 @@ if [ $? -ne 0 ]; then
 fi
 
 #
-# Create the public key root certificate file, which has a long lifetime
+# Create the root certificate file, which has a long lifetime
 #
 openssl req \
     -x509 \
@@ -63,7 +63,7 @@ if [ $? -ne 0 ]; then
 fi
 
 #
-# Create the SSL key
+# Create the SSL keypair
 #
 openssl genrsa -out $SSL_CERT_FILE_PREFIX.key 2048
 if [ $? -ne 0 ]; then
@@ -72,7 +72,7 @@ if [ $? -ne 0 ]; then
 fi
 
 #
-# Create the certificate signing request file
+# Create the certificate signing request for a wildcard certificate
 #
 openssl req \
     -new \
@@ -85,7 +85,7 @@ if [ $? -ne 0 ]; then
 fi
 
 #
-# Create the SSL certificate and private key, which must have a limited lifetime
+# Create the SSL certificate, which must have a limited lifetime
 #
 openssl x509 -req \
     -in $SSL_CERT_FILE_PREFIX.csr \
