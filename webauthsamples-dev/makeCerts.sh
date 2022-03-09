@@ -43,13 +43,13 @@ if [ $? -ne 0 ]; then
 fi
 
 #
-# Create the certificate signing request for a wildcard certificate
+# Create the certificate signing request for the SSL certificate
 #
 openssl req \
     -new \
     -key $SSL_CERT_FILE_PREFIX.key \
     -out $SSL_CERT_FILE_PREFIX.csr \
-    -subj "/CN=$WILDCARD_DOMAIN_NAME"
+    -subj "/CN=$SSL_DOMAIN_NAME"
 if [ $? -ne 0 ]; then
   echo '*** Problem encountered creating the SSL certificate signing request'
   exit 1
