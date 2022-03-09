@@ -23,15 +23,44 @@ esac
 #
 # Root certificate parameters
 #
-ROOT_CERT_FILE_PREFIX='../mycompany.ca'
+ORGANIZATION='web.authsamples-dev'
+ROOT_CERT_FILE_PREFIX="$ORGANIZATION.ca"
+ROOT_CERT_DESCRIPTION="Self Signed CA for $ORGANIZATION.com"
 
 #
 # SSL certificate parameters
 #
-SSL_CERT_NAME='web.authsamples-dev'
-SSL_DOMAIN_NAME="$SSL_CERT_NAME.com"
-SSL_CERT_FILE_PREFIX="$SSL_CERT_NAME.ssl"
+SSL_CERT_FILE_PREFIX="$ORGANIZATION.ssl"
 SSL_CERT_PASSWORD='Password1'
+SSL_DOMAIN_NAME="$ORGANIZATION.com"
+
+#
+# Create the root public + private key
+#
+openssl genrsa -out $ROOT_CERT_FILE_PREFIX.key 2048
+if [ $? -ne 0 ]; then
+  echo '*** Problem encountered creating the Root CA key'
+  exit 1
+fi
+
+#
+# Create the root certificate file, which has a long lifetime
+#
+openssl req \
+    -x509 \
+    -new \
+    -nodes \
+    -key $ROOT_CERT_FILE_PREFIX.key \
+    -out $ROOT_CERT_FILE_PREFIX.pem \
+    -subj "/CN=$ROOT_CERT_DESCRIPTION" \
+    -reqexts v3_req \
+    -extensions v3_ca \
+    -sha256 \
+    -days 3650
+if [ $? -ne 0 ]; then
+  echo '*** Problem encountered creating the Root CA'
+  exit 1
+fi
 
 #
 # Create the SSL keypair
@@ -89,5 +118,6 @@ fi
 #
 # Delete files no longer needed
 #
-rm "$SSL_CERT_NAME.ssl.csr"
+rm "$ORGANIZATION.ssl.csr"
+rm "$ORGANIZATION.ca.srl"
 echo 'All certificates created successfully'
