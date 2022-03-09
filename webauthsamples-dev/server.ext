@@ -1,1 +1,1 @@
-subjectAltName=DNS:webauthsamples-dev.com
+subjectAltName=DNS:mycompany.com,DNS:webauthsamples-dev.com
