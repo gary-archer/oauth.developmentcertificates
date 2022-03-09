@@ -28,7 +28,7 @@ ROOT_CERT_FILE_PREFIX='../mycompany.ca'
 #
 # SSL certificate parameters
 #
-SSL_CERT_NAME='webauthsamples-dev'
+SSL_CERT_NAME='web.authsamples-dev'
 SSL_DOMAIN_NAME="$SSL_CERT_NAME.com"
 SSL_CERT_FILE_PREFIX="$SSL_CERT_NAME.ssl"
 SSL_CERT_PASSWORD='Password1'
