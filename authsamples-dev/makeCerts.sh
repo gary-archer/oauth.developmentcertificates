@@ -23,7 +23,7 @@ esac
 #
 # Root certificate parameters
 #
-ORGANIZATION='web.authsamples-dev'
+ORGANIZATION='authsamples-dev'
 ROOT_CERT_FILE_PREFIX="$ORGANIZATION.ca"
 ROOT_CERT_DESCRIPTION="Self Signed CA for $ORGANIZATION.com"
 
@@ -32,7 +32,7 @@ ROOT_CERT_DESCRIPTION="Self Signed CA for $ORGANIZATION.com"
 #
 SSL_CERT_FILE_PREFIX="$ORGANIZATION.ssl"
 SSL_CERT_PASSWORD='Password1'
-SSL_DOMAIN_NAME="$ORGANIZATION.com"
+WILDCARD_DOMAIN_NAME="*.$ORGANIZATION.com"
 
 #
 # Create the root public + private key
@@ -78,7 +78,7 @@ openssl req \
     -new \
     -key $SSL_CERT_FILE_PREFIX.key \
     -out $SSL_CERT_FILE_PREFIX.csr \
-    -subj "/CN=$SSL_DOMAIN_NAME"
+    -subj "/CN=$WILDCARD_DOMAIN_NAME"
 if [ $? -ne 0 ]; then
   echo '*** Problem encountered creating the SSL certificate signing request'
   exit 1
@@ -107,7 +107,7 @@ fi
 openssl pkcs12 \
     -export -inkey $SSL_CERT_FILE_PREFIX.key \
     -in $SSL_CERT_FILE_PREFIX.pem \
-    -name $SSL_DOMAIN_NAME \
+    -name $WILDCARD_DOMAIN_NAME \
     -out $SSL_CERT_FILE_PREFIX.p12 \
     -passout pass:$SSL_CERT_PASSWORD
 if [ $? -ne 0 ]; then
