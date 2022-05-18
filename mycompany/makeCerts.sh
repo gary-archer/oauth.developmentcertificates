@@ -25,9 +25,6 @@ case "$(uname -s)" in
 	;;
 esac
 
-echo $OPENSSL_CONF
-exit
-
 #
 # Root certificate parameters
 #
