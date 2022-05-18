@@ -18,6 +18,11 @@ case "$(uname -s)" in
     export OPENSSL_CONF='C:/Program Files/Git/usr/ssl/openssl.cnf';
     export MSYS_NO_PATHCONV=1;
 	;;
+
+  # Linux
+  Linux*)
+    export OPENSSL_CONF='/usr/lib/ssl/openssl.cnf';
+	;;
 esac
 
 #

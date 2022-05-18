@@ -3,16 +3,20 @@
 Development certificates for use with my blog's OAuth code samples.\
 Wildcard certificates are used so that there is a single certificate to manage.
 
-# *.mycompany.com
+## *.mycompany.com
 
 These are my default local computer domains for testing of early code samples.\
 I also use this for external URLs in local Kubernetes deployments.
 
 ![mycompany certificate](./doc/mycompany.png)
 
-# *.authsamples-dev.com
+## *.authsamples-dev.com
 
 This is a more complex setup, where the tokenhandler subdomain runs in AWS.\
 This enables me to run the final Single Page App locally with only the React code.
 
 ![authsamples-dev certificate](./doc/authsamples-dev.png)
+
+## Further Information
+
+See the [Development SSL Setup](https://authguidance.com/2017/11/11/developer-ssl-setup/) blog post for further details on local setups.
