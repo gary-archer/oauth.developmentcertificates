@@ -1,1 +1,1 @@
-subjectAltName=DNS:authsamples-dev.com,DNS:api.authsamples-dev.com,DNS:web.authsamples-dev.com,DNS:login.authsamples-dev.com,DNS:localtokenhandler.authsamples-dev.com,DNS:logs.authsamples-dev.com,DNS:oauthagent-internal.authsamples-dev.com
+subjectAltName=DNS:authsamples-dev.com,DNS:api.authsamples-dev.com,DNS:web.authsamples-dev.com,DNS:login.authsamples-dev.com,DNS:localtokenhandler.authsamples-dev.com,DNS:logs.authsamples-dev.com,DNS:oauthagent-internal.authsamples-dev.com,DNS:elastic-internal.authsamples-dev.com
