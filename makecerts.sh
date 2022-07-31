@@ -34,7 +34,7 @@ if [ "$ORGANIZATION" != 'mycompany' -a "$ORGANIZATION" != 'authsamples-dev' -a "
   exit 1
 fi
 if [ ! -d "$ORGANIZATION" ]; then
-  echo 'An invalid base domain was supplied in the command line parameter'
+  echo "The $ORGANIZATION folder does not exist"
   exit 1
 fi
 cd "$ORGANIZATION"
