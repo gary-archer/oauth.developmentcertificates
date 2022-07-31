@@ -26,11 +26,11 @@ case "$(uname -s)" in
 esac
 
 #
-# The base domain is 'mycompany' or 'mycluster' or 'authsamples-dev'
+# The base domain is 'mycompany', 'authsamples-dev' or 'mycluster' 
 #
 ORGANIZATION="$1"
-if [ "$ORGANIZATION"  == '' ]; then
-  echo "Supply the base domain as a command line parameter: 'mycompany', 'mycluster' or 'authsamples-dev'"
+if [ "$ORGANIZATION" != 'mycompany' -a "$ORGANIZATION" != 'authsamples-dev' -a "$ORGANIZATION" != 'mycluster' ]; then
+  echo "Supply the base domain as a command line parameter: 'mycompany', 'authsamples-dev' or 'mycluster'"
   exit 1
 fi
 if [ ! -d "$ORGANIZATION" ]; then
