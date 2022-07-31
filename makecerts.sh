@@ -26,9 +26,22 @@ case "$(uname -s)" in
 esac
 
 #
+# The base domain is 'mycompany', 'authsamples-dev' or 'mycluster' 
+#
+ORGANIZATION="$1"
+if [ "$ORGANIZATION" != 'mycompany' -a "$ORGANIZATION" != 'authsamples-dev' -a "$ORGANIZATION" != 'mycluster' ]; then
+  echo "Supply the base domain as a command line parameter: 'mycompany', 'authsamples-dev' or 'mycluster'"
+  exit 1
+fi
+if [ ! -d "$ORGANIZATION" ]; then
+  echo "The $ORGANIZATION folder does not exist"
+  exit 1
+fi
+cd "$ORGANIZATION"
+
+#
 # Root certificate parameters
 #
-ORGANIZATION='authsamples-dev'
 ROOT_CERT_FILE_PREFIX="$ORGANIZATION.ca"
 ROOT_CERT_DESCRIPTION="Self Signed CA for $ORGANIZATION.com"
 
@@ -77,7 +90,7 @@ if [ $? -ne 0 ]; then
 fi
 
 #
-# Create the certificate signing request for the SSL certificate
+# Create the certificate signing request for a wildcard certificate
 #
 openssl req \
     -new \
