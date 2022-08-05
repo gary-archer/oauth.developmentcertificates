@@ -1,3 +1,9 @@
+#!/bin/bash
+
+##################################################################################################
+# Creates a development root CA, then issues wildcard certificates for a domain and its subdomains 
+##################################################################################################
+
 #
 # Ensure that we are in the folder containing this script
 #
