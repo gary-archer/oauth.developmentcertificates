@@ -21,6 +21,16 @@ A setup where components are deployed to a local Kubernetes cluster:
 
 ![mycluster certificate](./doc/mycluster.png)
 
+## Certification Creation
+
+Certificates can be recreated when required with one of these commands:
+
+```bash
+./makecerts.sh mycompany
+./makecerts.sh authsamples-dev
+./makecerts.sh mycluster
+```
+
 ## Further Information
 
 See the [Development SSL Setup](https://authguidance.com/2017/11/11/developer-ssl-setup/) blog post for further details on local setups.
