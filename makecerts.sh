@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##################################################################################################
-# Creates a development root CA, then issues wildcard certificates for a domain and its subdomains 
+# Creates a development root CA, then issues wildcard certificates for a domain and its subdomains
 ##################################################################################################
 
 #
@@ -30,6 +30,15 @@ case "$(uname -s)" in
     export OPENSSL_CONF='/usr/lib/ssl/openssl.cnf';
 	;;
 esac
+
+#
+# Require OpenSSL 3 to create P12 files, which prevents problems on Node.js 17+
+# https://github.com/nodejs/node/issues/40672
+#
+OPENSSL_VERSION_3=$(openssl version | grep 'OpenSSL 3')
+if [ "$OPENSSL_VERSION_3" == '' ]; then
+  echo 'Please install openssl version 3 or higher before running this script'
+fi
 
 #
 # The base domain is 'mycompany', 'authsamples-dev' or 'mycluster' 
@@ -143,5 +152,4 @@ fi
 # Delete files no longer needed
 #
 rm "$ORGANIZATION.ssl.csr"
-rm "$ORGANIZATION.ca.srl"
 echo 'All certificates created successfully'
