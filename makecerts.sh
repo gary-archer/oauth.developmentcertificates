@@ -31,6 +31,10 @@ case "$(uname -s)" in
 	;;
 esac
 
+#
+# Require OpenSSL 3 to create P12 files, which prevents problems on Node.js 17+
+# https://github.com/nodejs/node/issues/40672
+#
 OPENSSL_VERSION_3=$(openssl version | grep 'OpenSSL 3')
 if [ "$OPENSSL_VERSION_3" == '' ]; then
   echo 'Please install openssl version 3 or higher before running this script'
@@ -66,7 +70,7 @@ WILDCARD_DOMAIN_NAME="*.$ORGANIZATION.com"
 #
 # Create the root public + private key
 #
-openssl genrsa -out $ROOT_CERT_FILE_PREFIX.key 2048
+#openssl genrsa -out $ROOT_CERT_FILE_PREFIX.key 2048
 if [ $? -ne 0 ]; then
   echo '*** Problem encountered creating the Root CA key'
   exit 1
@@ -75,17 +79,17 @@ fi
 #
 # Create the root certificate file, which has a long lifetime
 #
-openssl req \
-    -x509 \
-    -new \
-    -nodes \
-    -key $ROOT_CERT_FILE_PREFIX.key \
-    -out $ROOT_CERT_FILE_PREFIX.pem \
-    -subj "/CN=$ROOT_CERT_DESCRIPTION" \
-    -reqexts v3_req \
-    -extensions v3_ca \
-    -sha256 \
-    -days 3650
+#openssl req \
+#    -x509 \
+#    -new \
+#    -nodes \
+#    -key $ROOT_CERT_FILE_PREFIX.key \
+#    -out $ROOT_CERT_FILE_PREFIX.pem \
+#    -subj "/CN=$ROOT_CERT_DESCRIPTION" \
+#    -reqexts v3_req \
+#    -extensions v3_ca \
+#    -sha256 \
+#    -days 3650
 if [ $? -ne 0 ]; then
   echo '*** Problem encountered creating the Root CA'
   exit 1
@@ -148,5 +152,4 @@ fi
 # Delete files no longer needed
 #
 rm "$ORGANIZATION.ssl.csr"
-rm "$ORGANIZATION.ca.srl"
 echo 'All certificates created successfully'
