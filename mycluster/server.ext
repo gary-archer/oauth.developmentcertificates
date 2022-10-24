@@ -1,1 +1,1 @@
-subjectAltName=DNS:mycluster.com,DNS:api.mycluster.com,DNS:web.mycluster.com,DNS:tokenhandler.mycluster.com,DNS:login.mycluster.com,DNS:logs.mycluster.com,DNS:dashboard.mycluster.com
+subjectAltName=DNS:mycluster.com,DNS:api.mycluster.com,DNS:web.mycluster.com,DNS:tokenhandler.mycluster.com,DNS:login.mycluster.com,DNS:logs.mycluster.com,DNS:dashboard.mycluster.com,DNS:dashboard-login.mycluster.com
