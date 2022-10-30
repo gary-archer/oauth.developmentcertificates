@@ -1,7 +1,8 @@
 # OAuth Development Certificates
 
 Development certificates for use with my blog's OAuth code samples.\
-Wildcard certificates are used so that there is a single certificate to manage.
+Wildcard certificates are used so that there is a single certificate to manage.\
+Real certificates should of course not be checked into a public repository like this.
 
 ## *.mycompany.com
 
