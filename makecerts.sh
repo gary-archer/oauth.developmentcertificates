@@ -58,7 +58,7 @@ cd "$ORGANIZATION"
 # Root certificate parameters
 #
 ROOT_CERT_FILE_PREFIX="$ORGANIZATION.ca"
-ROOT_CERT_DESCRIPTION="Self Signed CA for $ORGANIZATION.com"
+ROOT_CERT_DESCRIPTION="Development CA for $ORGANIZATION.com"
 
 #
 # SSL certificate parameters
