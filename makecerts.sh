@@ -151,5 +151,6 @@ fi
 #
 # Delete files no longer needed
 #
+rm "$ORGANIZATION.ca.srl"
 rm "$ORGANIZATION.ssl.csr"
 echo 'All certificates created successfully'
