@@ -32,6 +32,15 @@ case "$(uname -s)" in
 esac
 
 #
+# Require OpenSSL 3 to create P12 files, which prevents problems on Node.js 17+
+# https://github.com/nodejs/node/issues/40672
+#
+OPENSSL_VERSION_3=$(openssl version | grep 'OpenSSL 3')
+if [ "$OPENSSL_VERSION_3" == '' ]; then
+  echo 'Please install openssl version 3 or higher before running this script'
+fi
+
+#
 # Create the root CA
 #
 ROOT_CERT_FILE_PREFIX='cluster.internal.ca'
