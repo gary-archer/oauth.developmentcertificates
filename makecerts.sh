@@ -70,26 +70,26 @@ WILDCARD_DOMAIN_NAME="*.$ORGANIZATION.com"
 #
 # Create the root private key
 #
-#openssl genrsa -out $ROOT_CERT_FILE_PREFIX.key 2048
-#if [ $? -ne 0 ]; then
-#  echo '*** Problem encountered creating the Root CA key'
-#  exit 1
-#fi
+openssl genrsa -out $ROOT_CERT_FILE_PREFIX.key 2048
+if [ $? -ne 0 ]; then
+  echo '*** Problem encountered creating the Root CA key'
+  exit 1
+fi
 
 #
 # Create the root certificate file, which has a long lifetime
 #
-#openssl req \
-#    -x509 \
-#    -new \
-#    -nodes \
-#    -key $ROOT_CERT_FILE_PREFIX.key \
-#    -out $ROOT_CERT_FILE_PREFIX.pem \
-#    -subj "/CN=$ROOT_CERT_DESCRIPTION" \
-#    -reqexts v3_req \
-#    -extensions v3_ca \
-#    -sha256 \
-#    -days 3650
+openssl req \
+    -x509 \
+    -new \
+    -nodes \
+    -key $ROOT_CERT_FILE_PREFIX.key \
+    -out $ROOT_CERT_FILE_PREFIX.pem \
+    -subj "/CN=$ROOT_CERT_DESCRIPTION" \
+    -reqexts v3_req \
+    -extensions v3_ca \
+    -sha256 \
+    -days 3650
 if [ $? -ne 0 ]; then
   echo '*** Problem encountered creating the Root CA'
   exit 1
