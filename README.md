@@ -1,12 +1,12 @@
 # OAuth Development Certificates
 
-Development certificates for use with my blog's OAuth code samples.\
-Wildcard certificates are used so that there is a single certificate to manage.\
-Real certificates should of course not be checked into a public repository like this.
+Development certificates and keys for use with my blog's OAuth code samples.\
+Wildcard certificates are used so that there is a single certificate and key to manage.\
+Real private keys should of course not be checked into a public repository like this.
 
 ## Certification Creation
 
-Certificates can be recreated when required with one of these commands:
+Certificates and keys can be recreated when required with one of these commands:
 
 ```bash
 ./makecerts.sh mycompany
