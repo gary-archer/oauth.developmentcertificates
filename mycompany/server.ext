@@ -1,1 +1,1 @@
-subjectAltName=DNS:mycompany.com,DNS:api.mycompany.com,DNS:web.mycompany.com,DNS:login.mycompany.com
+subjectAltName=DNS:mycompany.com,DNS:api.mycompany.com,DNS:www.mycompany.com,DNS:login.mycompany.com
