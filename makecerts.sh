@@ -69,7 +69,7 @@ WILDCARD_DOMAIN_NAME="*.$ORGANIZATION.com"
 #
 # Create the root private key
 #
-openssl genpkey -algorithm EC -pkeyopt ec_paramgen_curve:prime256v1 -out $ROOT_CERT_FILE_PREFIX.key
+#openssl genpkey -algorithm EC -pkeyopt ec_paramgen_curve:prime256v1 -out $ROOT_CERT_FILE_PREFIX.key
 if [ $? -ne 0 ]; then
   echo '*** Problem encountered creating the Root CA key'
   exit 1
