@@ -9,16 +9,9 @@ Real private keys should of course not be checked into a public repository like 
 Certificates and keys can be recreated when required with one of these commands:
 
 ```bash
-./makecerts.sh mycompany
 ./makecerts.sh authsamples-dev
 ./makecerts.sh mycluster
 ```
-
-## *.mycompany.com
-
-These are my default local computer domains for testing of early SPA and API code samples:
-
-![mycompany certificate](./doc/mycompany.png)
 
 ## *.authsamples-dev.com
 

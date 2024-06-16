@@ -40,11 +40,11 @@ if [ "$OPENSSL_VERSION_3" == '' ]; then
 fi
 
 #
-# The base domain is 'mycompany', 'authsamples-dev' or 'mycluster' 
+# The base domain is 'authsamples-dev' or 'mycluster' 
 #
 ORGANIZATION="$1"
-if [ "$ORGANIZATION" != 'mycompany' -a "$ORGANIZATION" != 'authsamples-dev' -a "$ORGANIZATION" != 'mycluster' ]; then
-  echo "Supply the base domain as a command line parameter: 'mycompany', 'authsamples-dev' or 'mycluster'"
+if [ "$ORGANIZATION" != 'authsamples-dev' -a "$ORGANIZATION" != 'mycluster' ]; then
+  echo "Supply the base domain as a command line parameter: 'authsamples-dev' or 'mycluster'"
   exit 1
 fi
 if [ ! -d "$ORGANIZATION" ]; then
