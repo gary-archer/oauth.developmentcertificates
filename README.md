@@ -6,11 +6,11 @@ Real private keys should of course not be checked into a public repository like 
 
 ## Certification Creation
 
-Certificates and keys can be recreated when required with one of these commands:
+Certificates and keys can be recreated when required by specifying the base domain:
 
 ```bash
-./makecerts.sh dev
-./makecerts.sh k8s-dev
+./makecerts.sh authsamples-dev
+./makecerts.sh authsamples-k8s-dev
 ```
 
 ## *.authsamples-dev.com
@@ -27,4 +27,4 @@ Domains and subdomains in a KIND cluster on a local computer when testing deploy
 
 ## Further Information
 
-See the [Development SSL Setup](https://authguidance.com/2017/11/11/developer-ssl-setup/) blog post for further details on local setups.
+See the [Development SSL Setup](https://apisandclients.com/posts/developer-ssl-setup) blog post for further details on local setups.
