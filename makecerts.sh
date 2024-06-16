@@ -40,31 +40,31 @@ if [ "$OPENSSL_VERSION_3" == '' ]; then
 fi
 
 #
-# The base domain is 'authsamples-dev' or 'mycluster' 
+# The base domain is 'authsamples-dev' or 'authsamples-k8s-dev' 
 #
-ORGANIZATION="$1"
-if [ "$ORGANIZATION" != 'authsamples-dev' -a "$ORGANIZATION" != 'mycluster' ]; then
-  echo "Supply the base domain as a command line parameter: 'authsamples-dev' or 'mycluster'"
+BASEDOMAIN="$1"
+if [ "$BASEDOMAIN" != 'authsamples-dev' -a "$BASEDOMAIN" != 'authsamples-k8s-dev' ]; then
+  echo "Supply the base domain as a command line parameter: 'authsamples-dev' or 'authsamples-k8s-dev'"
   exit 1
 fi
-if [ ! -d "$ORGANIZATION" ]; then
-  echo "The $ORGANIZATION folder does not exist"
+if [ ! -d "$BASEDOMAIN" ]; then
+  echo "The $BASEDOMAIN folder does not exist"
   exit 1
 fi
-cd "$ORGANIZATION"
+cd "$BASEDOMAIN"
 
 #
 # Root certificate parameters
 #
-ROOT_CERT_FILE_PREFIX="$ORGANIZATION.ca"
-ROOT_CERT_DESCRIPTION="Development CA for $ORGANIZATION.com"
+ROOT_CERT_FILE_PREFIX="$BASEDOMAIN.ca"
+ROOT_CERT_DESCRIPTION="Development CA for $BASEDOMAIN.com"
 
 #
 # SSL certificate parameters
 #
-SSL_CERT_FILE_PREFIX="$ORGANIZATION.ssl"
+SSL_CERT_FILE_PREFIX="$BASEDOMAIN.ssl"
 SSL_CERT_PASSWORD='Password1'
-WILDCARD_DOMAIN_NAME="*.$ORGANIZATION.com"
+WILDCARD_DOMAIN_NAME="*.$BASEDOMAIN.com"
 
 #
 # Create the root private key
@@ -147,6 +147,6 @@ fi
 #
 # Delete files no longer needed
 #
-rm "$ORGANIZATION.ca.srl"
-rm "$ORGANIZATION.ssl.csr"
+rm "$BASEDOMAIN.ca.srl"
+rm "$BASEDOMAIN.ssl.csr"
 echo 'All certificates created successfully'

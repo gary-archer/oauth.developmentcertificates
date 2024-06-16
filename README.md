@@ -9,21 +9,21 @@ Real private keys should of course not be checked into a public repository like 
 Certificates and keys can be recreated when required with one of these commands:
 
 ```bash
-./makecerts.sh authsamples-dev
-./makecerts.sh mycluster
+./makecerts.sh dev
+./makecerts.sh k8s-dev
 ```
 
 ## *.authsamples-dev.com
 
-A setup where the web subdomain runs locally and API subdomains are deployed components in AWS:
+Domains and subdomains that run on the local computer during development:
 
 ![authsamples-dev certificate](./doc/authsamples-dev.png)
 
-## *.mycluster.com
+## *.authsamples-k8s-dev.com
 
-A setup where components are deployed to a local Kubernetes cluster:
+Domains and subdomains in a KIND cluster on a local computer when testing deployments:
 
-![mycluster certificate](./doc/mycluster.png)
+![authsamples-k8s-dev certificate](./doc/authsamples-k8s-dev.png)
 
 ## Further Information
 
