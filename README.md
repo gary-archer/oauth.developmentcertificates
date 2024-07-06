@@ -6,24 +6,17 @@ Real private keys should of course not be checked into a public repository like 
 
 ## Certification Creation
 
-Certificates and keys can be recreated when required by specifying the base domain:
+Certificates for my development computer code samples are created like this:
 
 ```bash
 ./makecerts.sh authsamples-dev
-./makecerts.sh authsamples-k8s-dev
 ```
 
-## *.authsamples-dev.com
+Certificates for a more complex Kubernetes local development deployment are created like this:
 
-Domains and subdomains that run on the local computer during development:
-
-![authsamples-dev certificate](./doc/authsamples-dev.png)
-
-## *.authsamples-k8s-dev.com
-
-Domains and subdomains in a KIND cluster on a local computer when testing deployments:
-
-![authsamples-k8s-dev certificate](./doc/authsamples-k8s-dev.png)
+```bash
+./makecerts.sh authsamples-k8s-dev
+```
 
 ## Further Information
 
