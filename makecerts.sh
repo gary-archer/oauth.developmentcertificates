@@ -32,7 +32,7 @@ case "$(uname -s)" in
 esac
 
 #
-# Require OpenSSL 3 to create P12 files
+# Require OpenSSL 3 so that up to date syntax can be used
 #
 OPENSSL_VERSION_3=$(openssl version | grep 'OpenSSL 3')
 if [ "$OPENSSL_VERSION_3" == '' ]; then
@@ -40,31 +40,18 @@ if [ "$OPENSSL_VERSION_3" == '' ]; then
 fi
 
 #
-# The base domain is 'authsamples-dev' or 'authsamples-k8s-dev' 
+# The domain is 'authsamples-dev' or 'authsamples-k8s-dev' 
 #
-BASEDOMAIN="$1"
-if [ "$BASEDOMAIN" != 'authsamples-dev' -a "$BASEDOMAIN" != 'authsamples-k8s-dev' ]; then
-  echo "Supply the base domain as a command line parameter: 'authsamples-dev' or 'authsamples-k8s-dev'"
+DOMAIN="$1"
+if [ "$DOMAIN" != 'authsamples-dev' -a "$DOMAIN" != 'authsamples-k8s-dev' ]; then
+  echo "Supply the domain as a command line parameter: 'authsamples-dev' or 'authsamples-k8s-dev'"
   exit 1
 fi
-if [ ! -d "$BASEDOMAIN" ]; then
-  echo "The $BASEDOMAIN folder does not exist"
+if [ ! -d "$DOMAIN" ]; then
+  echo "The $DOMAIN folder does not exist"
   exit 1
 fi
-cd "$BASEDOMAIN"
-
-#
-# Root certificate parameters
-#
-ROOT_CERT_FILE_PREFIX="$BASEDOMAIN.ca"
-ROOT_CERT_DESCRIPTION="Development CA for $BASEDOMAIN.com"
-
-#
-# SSL certificate parameters
-#
-SSL_CERT_FILE_PREFIX="$BASEDOMAIN.ssl"
-SSL_CERT_PASSWORD='Password1'
-WILDCARD_DOMAIN_NAME="*.$BASEDOMAIN.com"
+cd "$DOMAIN"
 
 #
 # Create the root private key
@@ -81,9 +68,9 @@ fi
 openssl req \
     -x509 \
     -new \
-    -key $ROOT_CERT_FILE_PREFIX.key \
-    -out $ROOT_CERT_FILE_PREFIX.pem \
-    -subj "/CN=$ROOT_CERT_DESCRIPTION" \
+    -key $DOMAIN.ca.key \
+    -out $DOMAIN.ca.crt \
+    -subj "/CN=Development CA for $DOMAIN.com" \
     -addext 'basicConstraints=critical,CA:TRUE' \
     -days 3650
 if [ $? -ne 0 ]; then
@@ -94,36 +81,27 @@ fi
 #
 # Create the SSL key
 #
-openssl genpkey -algorithm EC -pkeyopt ec_paramgen_curve:prime256v1 -out $SSL_CERT_FILE_PREFIX.key
+openssl genpkey -algorithm EC -pkeyopt ec_paramgen_curve:prime256v1 -out $DOMAIN.ssl.key
 if [ $? -ne 0 ]; then
   echo '*** Problem encountered creating the SSL key'
   exit 1
 fi
 
 #
-# Create the certificate signing request for a wildcard certificate
-#
-openssl req \
-    -new \
-    -key $SSL_CERT_FILE_PREFIX.key \
-    -out $SSL_CERT_FILE_PREFIX.csr \
-    -subj "/CN=$WILDCARD_DOMAIN_NAME" \
-    -addext 'basicConstraints=critical,CA:FALSE'
-if [ $? -ne 0 ]; then
-  echo '*** Problem encountered creating the SSL certificate signing request'
-  exit 1
-fi
-
-#
 # Create the SSL certificate, which must have a limited lifetime
 #
-openssl x509 -req \
-    -in $SSL_CERT_FILE_PREFIX.csr \
-    -CA $ROOT_CERT_FILE_PREFIX.pem \
-    -CAkey $ROOT_CERT_FILE_PREFIX.key \
-    -out $SSL_CERT_FILE_PREFIX.pem \
+openssl req \
+    -x509 \
+    -new \
+    -CA $DOMAIN.ca.crt \
+    -CAkey $DOMAIN.ca.key \
+    -key $DOMAIN.ssl.key \
+    -out $DOMAIN.ssl.crt \
+    -subj "/CN=*.$DOMAIN.com" \
     -days 365 \
-    -extfile server.ext
+    -addext 'basicConstraints=critical,CA:FALSE' \
+    -addext 'extendedKeyUsage=serverAuth' \
+    -addext "subjectAltName=$(cat ./subjectalternativenames.txt)"
 if [ $? -ne 0 ]; then
   echo '*** Problem encountered creating the SSL certificate'
   exit 1
@@ -134,19 +112,17 @@ fi
 #
 openssl pkcs12 \
     -export \
-    -inkey $SSL_CERT_FILE_PREFIX.key \
-    -in $SSL_CERT_FILE_PREFIX.pem \
-    -name $WILDCARD_DOMAIN_NAME \
-    -out $SSL_CERT_FILE_PREFIX.p12 \
-    -passout pass:$SSL_CERT_PASSWORD
+    -inkey $DOMAIN.ssl.key \
+    -in $DOMAIN.ssl.crt \
+    -name "*.$DOMAIN.com" \
+    -out $DOMAIN.ssl.p12 \
+    -passout pass:Password1
 if [ $? -ne 0 ]; then
   echo '*** Problem encountered creating the PKCS#12 file'
   exit 1
 fi
 
 #
-# Delete files no longer needed
+# Indicate success
 #
-rm "$BASEDOMAIN.ca.srl"
-rm "$BASEDOMAIN.ssl.csr"
 echo 'All certificates created successfully'
