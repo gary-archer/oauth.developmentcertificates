@@ -56,27 +56,27 @@ cd "$DOMAIN"
 #
 # Create the root private key
 #
-openssl ecparam -name prime256v1 -genkey -noout -out $DOMAIN.ca.key
-if [ $? -ne 0 ]; then
-  echo '*** Problem encountered creating the Root CA key'
-  exit 1
-fi
+#openssl ecparam -name prime256v1 -genkey -noout -out $DOMAIN.ca.key
+#if [ $? -ne 0 ]; then
+#  echo '*** Problem encountered creating the Root CA key'
+#  exit 1
+#fi
 
 #
 # Create the root certificate file, which has a long lifetime
 #
-openssl req \
-    -x509 \
-    -new \
-    -key $DOMAIN.ca.key \
-    -out $DOMAIN.ca.crt \
-    -subj "/CN=Development CA for $DOMAIN.com" \
-    -addext 'basicConstraints=critical,CA:TRUE' \
-    -days 3650
-if [ $? -ne 0 ]; then
-  echo '*** Problem encountered creating the Root CA'
-  exit 1
-fi
+#openssl req \
+#    -x509 \
+#    -new \
+#    -key $DOMAIN.ca.key \
+#    -out $DOMAIN.ca.crt \
+#    -subj "/CN=Development CA for $DOMAIN.com" \
+#    -addext 'basicConstraints=critical,CA:TRUE' \
+#    -days 3650
+#if [ $? -ne 0 ]; then
+#  echo '*** Problem encountered creating the Root CA'
+#  exit 1
+#fi
 
 #
 # Create the SSL key
