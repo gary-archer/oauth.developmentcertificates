@@ -1,18 +1,18 @@
 # OAuth Development Certificates
 
 Development certificates and keys for use with my blog's OAuth code samples.\
-Wildcard certificates are used so that there is a single certificate and key to manage.\
-Real private keys should of course not be checked into a public repository like this.
+I use wildcard certificates, so that there is a single certificate and key to manage.\
+You should of course not check real private keys into a public repository like this.
 
 ## Certification Creation
 
-Certificates for my development computer code samples are created like this:
+I create certificates for my development computer like this:
 
 ```bash
 ./makecerts.sh authsamples-dev
 ```
 
-Certificates for a more complex Kubernetes local development deployment are created like this:
+I create certificates for a local Kubernetes deployment like this:
 
 ```bash
 ./makecerts.sh authsamples-k8s-dev
@@ -20,4 +20,4 @@ Certificates for a more complex Kubernetes local development deployment are crea
 
 ## Further Information
 
-See the [Development SSL Setup](https://apisandclients.com/posts/developer-ssl-setup) blog post for further details on local setups.
+See the [Development SSL Setup](https://apisandclients.com/posts/developer-ssl-setup) blog post for further details on local certificate setups.
