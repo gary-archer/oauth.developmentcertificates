@@ -20,4 +20,4 @@ I create certificates for a local Kubernetes deployment like this:
 
 ## Further Information
 
-See the [Development SSL Setup](https://apisandclients.com/posts/developer-ssl-setup) blog post for further details on local certificate setups.
+See the [Development SSL Setup](https://github.com/gary-archer/oauth.blog/tree/master/public/posts/developer-ssl-setup.mdx) blog post for further details on local certificate setups.
