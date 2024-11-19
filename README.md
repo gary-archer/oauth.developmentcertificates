@@ -12,12 +12,6 @@ I create certificates for my development computer like this:
 ./makecerts.sh authsamples-dev
 ```
 
-I create certificates for a local Kubernetes deployment like this:
-
-```bash
-./makecerts.sh authsamples-k8s-dev
-```
-
 ## Further Information
 
 See the [Development SSL Setup](https://github.com/gary-archer/oauth.blog/tree/master/public/posts/developer-ssl-setup.mdx) blog post for further details on local certificate setups.

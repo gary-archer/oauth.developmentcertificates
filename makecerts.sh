@@ -40,17 +40,9 @@ if [ "$OPENSSL_VERSION_3" == '' ]; then
 fi
 
 #
-# The domain is 'authsamples-dev' or 'authsamples-k8s-dev' 
+# The domain is currently fixed
 #
-DOMAIN="$1"
-if [ "$DOMAIN" != 'authsamples-dev' -a "$DOMAIN" != 'authsamples-k8s-dev' ]; then
-  echo "Supply the domain as a command line parameter: 'authsamples-dev' or 'authsamples-k8s-dev'"
-  exit 1
-fi
-if [ ! -d "$DOMAIN" ]; then
-  echo "The $DOMAIN folder does not exist"
-  exit 1
-fi
+DOMAIN="authsamples-dev"
 cd "$DOMAIN"
 
 #
